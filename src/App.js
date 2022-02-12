@@ -7,16 +7,20 @@ import Home from './panels/Home';
 import SelectDate from "./panels/SelectDate";
 import SelectTime from "./panels/SelectTime";
 import {checkWithCurrentDate} from "./function/Function";
-import {getBase} from "./base/base";
-import {getBaseTest, postBaseTest, putBaseTest} from "./function/server";
+import {deleteBase, getBase, putBase} from "./function/Server";
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [selectedDate,setSelectedDate] = useState(new  Date());
-	const [base, setBase] = useState(getBase())
-	const [testBase, setTestBase] = useState(null)
+	const [base, setBase] = useState(null)
+
+	async function fetchData() {
+		const data = await getBase()
+		const id = Object.keys(data)
+		setBase(data[id])
+	}
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -31,49 +35,26 @@ const App = () => {
 			setUser(user);
 			setPopout(null);
 		}
-		fetchUser();
+		fetchUser().catch(error => console.log(error.message));
 
-		async function fetchData() {
-			const data = await getBaseTest()
-			setTestBase(data)
-		}
-
-		fetchData();
+		fetchData().catch(error => console.log(error.message));
 	}, []);
 
-	function user(){
-		console.log(testBase)
-		const tt =Object.keys(testBase)
-		const rr = {...testBase[tt]}
-		console.log(rr)
-
-	}
 
 	const go = e => {
 		setActivePanel(e.currentTarget.dataset.to);
+
 	};
 
-	function handlePrevMonthButtonClick (e) {
-			setSelectedDate(checkWithCurrentDate(new Date(e.getFullYear(), e.getMonth() - 1, e.getDate())))
+	function user(){
+		fetchData().catch(error => console.log(error.message));
+		deleteBase().catch(error => console.log(error.message));
 	}
-	function handleNextMonthButtonClick (e) {
-		setSelectedDate(new Date(e.getFullYear(), e.getMonth() + 1, e.getDate()))
-	}
-	function handleSelectMonth (e) {
-		setSelectedDate(checkWithCurrentDate(new Date(selectedDate.getFullYear(), e.target.value, selectedDate.getDate())))
-	}
-	function handleSelectYear (e) {
-		setSelectedDate(checkWithCurrentDate(new Date(e.target.value, selectedDate.getMonth(), selectedDate.getDate())))
 
-	}
-	function handleSelectDay (e) {
-		const tempDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), e.getDate())
-		setSelectedDate(tempDay)
-	}
-	function selectBase(e) {
+
+	function updateBase(e) {
 		setActivePanel("home")
-		putBaseTest(e)
-		console.log(e)
+		putBase(e).catch(error => console.log(error.message));
 	}
 
 	return (
@@ -102,13 +83,31 @@ const App = () => {
 						base={base}
 						selectedDate={selectedDate}
 						fetchedUser={fetchedUser}
-						selectBase={selectBase}
+						selectBase={updateBase}
 					/>
 				</View>
 
 			</AppRoot>
 		</AdaptivityProvider>
 	);
+
+	function handlePrevMonthButtonClick (e) {
+		setSelectedDate(checkWithCurrentDate(new Date(e.getFullYear(), e.getMonth() - 1, e.getDate())))
+	}
+	function handleNextMonthButtonClick (e) {
+		setSelectedDate(new Date(e.getFullYear(), e.getMonth() + 1, e.getDate()))
+	}
+	function handleSelectMonth (e) {
+		setSelectedDate(checkWithCurrentDate(new Date(selectedDate.getFullYear(), e.target.value, selectedDate.getDate())))
+	}
+	function handleSelectYear (e) {
+		setSelectedDate(checkWithCurrentDate(new Date(e.target.value, selectedDate.getMonth(), selectedDate.getDate())))
+
+	}
+	function handleSelectDay (e) {
+		const tempDay = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), e.getDate())
+		setSelectedDate(tempDay)
+	}
 }
 
 export default App;

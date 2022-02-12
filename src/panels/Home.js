@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import axios from "axios";
-
-
 import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
 
 
@@ -28,7 +25,7 @@ const Home = ({ id, go, fetchedUser, user}) => {
 					Выберите дату записи
 				</Button>
 				<Button stretched size="l" mode="secondary" onClick={user} data-to="selectDate">
-					Выберите дату записи
+					Календарь занятости
 				</Button>
 			</Div>
 		</Group>
