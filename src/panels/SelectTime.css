@@ -1,0 +1,11 @@
+.SelectTime {
+    display: flex;
+    height: 80%;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 20px;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 0 10px;
+}
