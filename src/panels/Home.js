@@ -6,6 +6,10 @@ import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@v
 
 const Home = ({ id, go, fetchedUser, user}) => {
 
+	function message(){
+		//sendMessage()
+	}
+
 
 	return (
 	<Panel id={id}>
@@ -26,6 +30,9 @@ const Home = ({ id, go, fetchedUser, user}) => {
 				</Button>
 				<Button stretched size="l" mode="secondary" onClick={user} data-to="adminPanel">
 					Календарь занятости
+				</Button>
+				<Button stretched size="l" mode="secondary" onClick={message} data-to="home">
+					Сообщение
 				</Button>
 			</Div>
 		</Group>

@@ -1,20 +1,28 @@
 .AdminPanel {
-
+    border: none;
 }
-#adminPanel {
+#adminTable {
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     box-shadow: 6px 6px 6px grey;
     text-align: center;
+    background-color: #d4d0d0;
 }
-#adminPanel td {
-    border-bottom: 1px solid black;
+#adminTable td {
+
+    border-bottom: 2px solid black;
     font-size: 12px;
 }
 #deleteButton {
     background-color: red;
     color: white;
+}
+#checked {
+    background-color: aquamarine;
+}
+#noChecked {
+    background-color: #d4d0d0;
 }

@@ -9,12 +9,12 @@ import "./AdminPanel.css"
 const AdminPanel = props => {
     const tableHeader = getTableHeader();
     const recordDate = Object.keys(props.base)
-    function print(){
-        recordDate.map(item => {
-            item.split('-')
 
-        })
+    function print(event,date,time){
+        const saveNote = {...props.base[date][time], note: event.target.value}
+        props.setNote(date, time , saveNote)
     }
+
 
 
 
@@ -25,8 +25,8 @@ const AdminPanel = props => {
             >
                 Записи
             </PanelHeader>
-            <div>
-                <table id='adminPanel'>
+            <div >
+                <table id='adminTable'>
                     <thead>
                         <tr>
                             {tableHeader.map(name =>
@@ -36,13 +36,21 @@ const AdminPanel = props => {
                     </thead>
                     <tbody>
                         {recordDate.map(date=>Object.keys(props.base[date]).map(time =>
-                                <tr key={time}>
+                                <tr id={props.base[date][time].mySession?'checked':'noChecked'} key={time}>
                                     <td>{date}<br/>{time}</td>
                                     <td>{props.base[date][time].firstName}<br/>{props.base[date][time].lastName}</td>
                                     <td>{props.base[date][time].phone}</td>
                                     <td>{props.base[date][time].amount}</td>
-                                    <td><textarea cols='15'/></td>
-                                    <td>3444</td>
+                                    <td><textarea cols='15' defaultValue={props.base[date][time].note} onBlur={(event)=>{print(event, date, time)}}/></td>
+                                    <td>
+                                        <input
+                                            name={date + time}
+                                            type='checkbox'
+                                            onChange={()=>{props.getMySession(date, time, props.base[date][time])}}
+                                            checked={props.base[date][time].mySession}
+                                        />
+
+                                    </td>
                                     <td>
                                         <button id='deleteButton' onClick={() => props.deleteRecordFromBase(date,time)}>
                                             X
@@ -56,9 +64,7 @@ const AdminPanel = props => {
                 </table>
 
             </div>
-            <div>
-                <button onClick={print}/>
-            </div>
+
         </Panel>
     );
 }

@@ -5,6 +5,7 @@ import "./SelectTime.css"
 import {Panel, PanelHeader, PanelHeaderBack} from "@vkontakte/vkui";
 import Input from "../components/Input";
 import {getDateFormat, getRecordTimes} from "../function/Function";
+import {sendMessage} from "../function/Server";
 
 
 const SelectTime = props => {
@@ -32,20 +33,25 @@ const SelectTime = props => {
     function handlePhone(e){phone = e.target.value}
     function handleAmount(e){amount = e.target.value}
 
-    function testing(){
-        let temp3 = {...props.base[selectedDate]}
-        selectedTime.map((value, index) => {
-            let temp = {
-                   firstName: firstName,
-                   lastName: lastName,
-                   phone: phone,
-                   vk_ID: props.fetchedUser.id,
-                   amount: amount,
+    function saveTimeRecords(){
+        const tempBase = {...props.base[selectedDate]}
+        const message = 'Вы записались ' + selectedDate + 'на' + selectedTime + 'в студию ZEN'
+        selectedTime.map((value) => {
+            tempBase[value]= {
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                vk_ID: props.fetchedUser.id,
+                amount: amount,
+                mySession: false,
+                note:''
                }
-               temp3[value]= temp
        })
-        base[selectedDate] = temp3
-        props.selectBase(base)
+        base[selectedDate] = tempBase
+        sendMessage(props.fetchedUser.id, Math.random()*34567, message).catch(err=>{
+            console.log(err)
+        })
+        props.updateBase(base)
 
     }
 
@@ -95,7 +101,7 @@ const SelectTime = props => {
                 </div>
             </div>
 
-            <button onClick={testing}>Записаться</button>
+            <button onClick={saveTimeRecords}>Записаться</button>
         </Panel>
     );
 }

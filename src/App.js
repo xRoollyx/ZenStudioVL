@@ -8,7 +8,7 @@ import SelectDate from "./panels/SelectDate";
 import SelectTime from "./panels/SelectTime";
 import AdminPanel from "./panels/AdminPanel";
 import {checkWithCurrentDate} from "./function/Function";
-import {deleteBase, getBase, putBase} from "./function/Server";
+import {deleteBase, getBase, putBase, putSession, sendMessage} from "./function/Server";
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
@@ -51,15 +51,32 @@ const App = () => {
 		setActivePanel("adminPanel");
 	}
 
+	function setMySession(date, time, saves) {
+		let mySession = {...saves, mySession: !base[date][time].mySession}
+		putSession(date, time, mySession).then(()=>{
+			fetchData().catch(error => console.log(error.message));
+			setActivePanel("adminPanel");
+		}).catch(err => {console.log(err)})
+	}
+
+	function setNote(date, time, saveNote) {
+		putSession(date, time, saveNote).then(()=>{
+			fetchData().catch(error => console.log(error.message));
+			setActivePanel("adminPanel");
+		}).catch(err => {console.log(err)})
+	}
+
 
 	function updateBase(e) {
 		setActivePanel("home")
-		console.log(e)
 		putBase(e).catch(error => console.log(error.message));
 	}
 	
 	function deleteRecordFromBase(recordDate, recordTimeToDelete) {
 		if (confirm("Вы уверенны?")){
+			const message = 'Ваша запись на ' + recordDate + ' в ' + recordTimeToDelete + ' анулированна'
+			sendMessage(base[recordDate][recordTimeToDelete].vk_ID, Math.random()*34567, message).catch(err => {
+				console.log(err)})
 			deleteBase(recordDate, recordTimeToDelete).then(()=>{
 				fetchData().catch(error => console.log(error.message));
 				setActivePanel("adminPanel")
@@ -93,13 +110,15 @@ const App = () => {
 						base={base}
 						selectedDate={selectedDate}
 						fetchedUser={fetchedUser}
-						selectBase={updateBase}
+						updateBase={updateBase}
 					/>
 					<AdminPanel
 						id='adminPanel'
 						go={go}
 						base={base}
 						deleteRecordFromBase={deleteRecordFromBase}
+						getMySession={setMySession}
+						setNote={setNote}
 					/>
 				</View>
 
