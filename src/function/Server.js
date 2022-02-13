@@ -10,22 +10,13 @@ export function getBase(){
 }
 
 export async function postBase(newRecord){
-    try {
-        const response = await axios.post(`${baseUrl}/ZenRecords.json`, newRecord)
-        console.log(response)
-    } catch(e) {
-        console.log(e);
-    }
+    return  await axios.post(`${baseUrl}/ZenRecords.json`, newRecord)
 }
+
 export async function putBase(newRecord){
-        const response = await axios.put(`${baseUrl}/ZenRecords/-MvivT7WWv66hbyAuaDO.json`, newRecord)
-    return response
+    return await axios.put(`${baseUrl}/ZenRecords/-Mvm_QfeNT4XBwpmFbVA.json`, newRecord)
 }
-export async function deleteBase(){
-    try {
-        const response = await axios.delete(`${baseUrl}/ZenRecords/-MvivT7WWv66hbyAuaDO/13-02-2022/12-13.json`)
-        console.log(response)
-    } catch(e) {
-        console.log(e);
-    }
+
+export async function deleteBase(recordDate, recordTimeToDelete){
+    return  await axios.delete(`${baseUrl}/ZenRecords/-Mvm_QfeNT4XBwpmFbVA/${recordDate}/${recordTimeToDelete}.json`)
 }

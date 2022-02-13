@@ -24,7 +24,7 @@ const Home = ({ id, go, fetchedUser, user}) => {
 				<Button stretched size="l" mode="secondary" onClick={go} data-to="selectDate">
 					Выберите дату записи
 				</Button>
-				<Button stretched size="l" mode="secondary" onClick={user} data-to="selectDate">
+				<Button stretched size="l" mode="secondary" onClick={user} data-to="adminPanel">
 					Календарь занятости
 				</Button>
 			</Div>

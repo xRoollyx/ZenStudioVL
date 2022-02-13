@@ -6,6 +6,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import Home from './panels/Home';
 import SelectDate from "./panels/SelectDate";
 import SelectTime from "./panels/SelectTime";
+import AdminPanel from "./panels/AdminPanel";
 import {checkWithCurrentDate} from "./function/Function";
 import {deleteBase, getBase, putBase} from "./function/Server";
 
@@ -43,18 +44,27 @@ const App = () => {
 
 	const go = e => {
 		setActivePanel(e.currentTarget.dataset.to);
-
 	};
 
 	function user(){
 		fetchData().catch(error => console.log(error.message));
-		deleteBase().catch(error => console.log(error.message));
+		setActivePanel("adminPanel");
 	}
 
 
 	function updateBase(e) {
 		setActivePanel("home")
+		console.log(e)
 		putBase(e).catch(error => console.log(error.message));
+	}
+	
+	function deleteRecordFromBase(recordDate, recordTimeToDelete) {
+		if (confirm("Вы уверенны?")){
+			deleteBase(recordDate, recordTimeToDelete).then(()=>{
+				fetchData().catch(error => console.log(error.message));
+				setActivePanel("adminPanel")
+			}).catch(err=>console.log(err))
+		}
 	}
 
 	return (
@@ -84,6 +94,12 @@ const App = () => {
 						selectedDate={selectedDate}
 						fetchedUser={fetchedUser}
 						selectBase={updateBase}
+					/>
+					<AdminPanel
+						id='adminPanel'
+						go={go}
+						base={base}
+						deleteRecordFromBase={deleteRecordFromBase}
 					/>
 				</View>
 
