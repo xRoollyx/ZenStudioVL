@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/xRoollyx/ZenStudioVL/static/css/main.87178b4f.chunk.css",
+    "main.js": "/xRoollyx/ZenStudioVL/static/js/main.a8b8cfbe.chunk.js",
+    "main.js.map": "/xRoollyx/ZenStudioVL/static/js/main.a8b8cfbe.chunk.js.map",
+    "runtime-main.js": "/xRoollyx/ZenStudioVL/static/js/runtime-main.39434fa4.js",
+    "runtime-main.js.map": "/xRoollyx/ZenStudioVL/static/js/runtime-main.39434fa4.js.map",
+    "static/css/2.a2ab3232.chunk.css": "/xRoollyx/ZenStudioVL/static/css/2.a2ab3232.chunk.css",
+    "static/js/2.0b7ad4f1.chunk.js": "/xRoollyx/ZenStudioVL/static/js/2.0b7ad4f1.chunk.js",
+    "static/js/2.0b7ad4f1.chunk.js.map": "/xRoollyx/ZenStudioVL/static/js/2.0b7ad4f1.chunk.js.map",
+    "index.html": "/xRoollyx/ZenStudioVL/index.html",
+    "static/css/2.a2ab3232.chunk.css.map": "/xRoollyx/ZenStudioVL/static/css/2.a2ab3232.chunk.css.map",
+    "static/css/main.87178b4f.chunk.css.map": "/xRoollyx/ZenStudioVL/static/css/main.87178b4f.chunk.css.map",
+    "static/js/2.0b7ad4f1.chunk.js.LICENSE.txt": "/xRoollyx/ZenStudioVL/static/js/2.0b7ad4f1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.39434fa4.js",
+    "static/css/2.a2ab3232.chunk.css",
+    "static/js/2.0b7ad4f1.chunk.js",
+    "static/css/main.87178b4f.chunk.css",
+    "static/js/main.a8b8cfbe.chunk.js"
+  ]
+}
