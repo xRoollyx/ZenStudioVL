@@ -35,7 +35,7 @@ const SelectTime = props => {
 
     function saveTimeRecords(){
         const tempBase = {...props.base[selectedDate]}
-        const message = 'Вы записались ' + selectedDate + 'на' + selectedTime + 'в студию ZEN'
+        const message = 'Произведена запись ' + selectedDate + ' на ' + selectedTime + ' пользователь: ' + firstName + ' ' +  lastName + ' https://vk.com/id' +  props.fetchedUser.id
         selectedTime.map((value) => {
             tempBase[value]= {
                 firstName: firstName,
@@ -48,7 +48,7 @@ const SelectTime = props => {
                }
        })
         base[selectedDate] = tempBase
-        sendMessage(props.fetchedUser.id, Math.random()*34567, message).catch(err=>{
+        sendMessage(props.adminVkID, Math.random()*34567, message).catch(err=>{
             console.log(err)
         })
         props.updateBase(base)
@@ -82,22 +82,22 @@ const SelectTime = props => {
                 })}
                 </div>
             </div>
-            <div>
-                <div>
-                    <label>Имя</label>
-                    <input type="text" onChange={handleFirstName} defaultValue={props.fetchedUser.first_name}/>
+            <div id='person'>
+                <div id='form'>
+                    <label id='la1'>Имя:</label>
+                    <input id='in1' type="text" onChange={handleFirstName} defaultValue={props.fetchedUser.first_name}/>
                 </div>
                 <div>
-                    <label>Фамилия</label>
-                    <input type="text" onChange={handleLastName} defaultValue={props.fetchedUser.last_name}/>
+                    <label id='la1'>Фамилия:</label>
+                    <input id='in1' type="text" onChange={handleLastName} defaultValue={props.fetchedUser.last_name}/>
                 </div>
                 <div>
-                    <label>Телефон</label>
-                    <input type="text" onChange={handlePhone} defaultValue='+7'/>
+                    <label id='la1'>Телефон:</label>
+                    <input id='in1' type="text" onChange={handlePhone} defaultValue='+7'/>
                 </div>
                 <div>
-                    <label>Количество людей</label>
-                    <input type="text" onChange={handleAmount} defaultValue=''/>
+                    <label id='la1'>Количество людей:</label>
+                    <input id='in1' type="text" onChange={handleAmount} defaultValue=''/>
                 </div>
             </div>
 

@@ -7,7 +7,7 @@ import Home from './panels/Home';
 import SelectDate from "./panels/SelectDate";
 import SelectTime from "./panels/SelectTime";
 import AdminPanel from "./panels/AdminPanel";
-import {checkWithCurrentDate} from "./function/Function";
+import {checkWithCurrentDate, getAdminID} from "./function/Function";
 import {deleteBase, getBase, putBase, putSession, sendMessage} from "./function/Server";
 
 const App = () => {
@@ -16,6 +16,8 @@ const App = () => {
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [selectedDate,setSelectedDate] = useState(new  Date());
 	const [base, setBase] = useState(null)
+	const [isAdmin, setAdmin] = useState(false)
+	const adminVkID = getAdminID()
 
 	async function fetchData() {
 		const data = await getBase()
@@ -35,10 +37,14 @@ const App = () => {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			setUser(user);
 			setPopout(null);
+			if (user.id === adminVkID){
+				setAdmin(true)
+			}
 		}
 		fetchUser().catch(error => console.log(error.message));
 
 		fetchData().catch(error => console.log(error.message));
+
 	}, []);
 
 
@@ -74,8 +80,8 @@ const App = () => {
 	
 	function deleteRecordFromBase(recordDate, recordTimeToDelete) {
 		if (confirm("Вы уверенны?")){
-			const message = 'Ваша запись на ' + recordDate + ' в ' + recordTimeToDelete + ' анулированна'
-			sendMessage(base[recordDate][recordTimeToDelete].vk_ID, Math.random()*34567, message).catch(err => {
+			const message = 'Запись ' + recordDate + ' на ' + recordTimeToDelete + ' анулированна'
+			sendMessage(adminVkID, Math.random()*34567, message).catch(err => {
 				console.log(err)})
 			deleteBase(recordDate, recordTimeToDelete).then(()=>{
 				fetchData().catch(error => console.log(error.message));
@@ -93,6 +99,7 @@ const App = () => {
 						id='home'
 						go={go}
 						user={user}
+						isAdmin={isAdmin}
 					/>
 					<SelectDate
 						selectedDate = {selectedDate}
@@ -111,6 +118,7 @@ const App = () => {
 						selectedDate={selectedDate}
 						fetchedUser={fetchedUser}
 						updateBase={updateBase}
+						adminVkID={adminVkID}
 					/>
 					<AdminPanel
 						id='adminPanel'

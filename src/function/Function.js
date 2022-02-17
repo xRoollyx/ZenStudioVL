@@ -1,5 +1,7 @@
 import React from "react";
 
+const ADMIN_ID = 54506803
+
 const MONTH_DAY = {years: [ 2021, 2022, 2023, 2024],
     monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
     weekDayNames: ['Пн', 'Вт', 'Ср', 'Чт' , 'Пт', 'Сб', 'Вс']}
@@ -25,7 +27,7 @@ const Month = {
     December: 11
 };
 
-const RECORD_TIMES = ['10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19']
+const RECORD_TIMES = ['10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-1400', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00']
 
 const TABLE_HEADER = ['Дата','Ф.И.О','Телефон','Колл','Заметка','Вид','Удалить']
 
@@ -39,6 +41,10 @@ export function getRecordTimes() {
 
 export function getTableHeader(){
     return TABLE_HEADER
+}
+
+export function getAdminID(){
+    return ADMIN_ID
 }
 
 export  function pastDate(a, b) {

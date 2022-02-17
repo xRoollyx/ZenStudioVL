@@ -1,11 +1,33 @@
 .SelectTime {
-    display: flex;
+    display: block;
     height: 80%;
     width: 60%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 20px;
     border: 2px solid gray;
     border-radius: 5px;
     padding: 0 10px;
+    margin: 20px auto;
+}
+.time {
+    display: flex;
+}
+
+#person {
+    margin-right: auto;
+    margin-left: 20%;
+}
+#la1 {
+    display: block;
+    padding: 0;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+#in1 {
+    display: block;
+    box-sizing: border-box;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 0 0 5px;
+    width: 100%;
+    outline: none;
 }
