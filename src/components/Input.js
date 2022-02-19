@@ -1,9 +1,10 @@
 import React from "react";
+import './Input.css'
 
 const Input = props =>{
 
     return(
-        <div>
+        <div id="Input">
             <input
                 type="checkbox"
                 id={props.id}

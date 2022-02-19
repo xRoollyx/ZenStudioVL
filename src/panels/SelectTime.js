@@ -1,8 +1,8 @@
-import React from 'react';
+
 import PropTypes from 'prop-types';
 import "./SelectTime.css"
 
-import {Panel, PanelHeader, PanelHeaderBack} from "@vkontakte/vkui";
+import {Panel,Button, PanelHeader, PanelHeaderBack} from "@vkontakte/vkui";
 import Input from "../components/Input";
 import {getDateFormat, getRecordTimes} from "../function/Function";
 import {sendMessage} from "../function/Server";
@@ -20,18 +20,17 @@ const SelectTime = props => {
     let phone = null
     let amount = null
 
-    function handleTime(e){
-        const index = selectedTime.indexOf(e.target.value)
-        if (index >= 0){
-            selectedTime.splice(index, 1)
-        }else {
-            selectedTime.push(e.target.value)
-        }
-    }
     function handleFirstName(e){firstName = e.target.value}
     function handleLastName(e){lastName = e.target.value}
-    function handlePhone(e){phone = e.target.value}
+    function handlePhone(e){
+        phone = e.target.value
+        validateForm()
+    }
     function handleAmount(e){amount = e.target.value}
+    function  validateForm(){
+        let regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+        props.setValidation(regex.test(phone),selectedTime.length > 0)
+    }
 
     function saveTimeRecords(){
         const tempBase = {...props.base[selectedDate]}
@@ -54,6 +53,11 @@ const SelectTime = props => {
         props.updateBase(base)
 
     }
+    function tes(){
+        console.log(!props.isValidate, props.selectedTime)
+
+    }
+
 
     return (
         <Panel id={props.id}>
@@ -63,24 +67,53 @@ const SelectTime = props => {
                 Выберите время
             </PanelHeader>
             <div className="SelectTime">
-                <div className="time">{recordTime.map((value, index) => {
-                    if (busyTime.includes(value)) {
-                        return <Input
-                            key={index}
-                            id={index}
-                            value={value}
-                            disabled={true}
-                        />
+                <div className="time">
+                {recordTime.map((value, index) =>{
+                    if (index <= 2){
+                        return (
+                            <Input
+                                key={index}
+                                id={index}
+                                onChange={props.changeSelectedTime}
+                                value={value}
+                                disabled={busyTime.includes(value)}
+                            />
+                        )
                     }
-                    else
-                        return <Input
-                            key={index}
-                            id={index}
-                            value={value}
-                            onChange={handleTime}
-                        />
                 })}
                 </div>
+                <div className="time">
+                    {recordTime.map((value, index) =>{
+                        if (index > 2 && index <= 5){
+                            return (
+                                <Input
+                                    key={index}
+                                    id={index}
+                                    onChange={props.changeSelectedTime}
+                                    value={value}
+                                    disabled={busyTime.includes(value)}
+                                />
+                            )
+                        }
+                    })}
+                </div>
+                <div className="time">
+                    {recordTime.map((value, index) =>{
+                        if (index > 5){
+                            return (
+                                <Input
+                                    key={index}
+                                    id={index}
+                                    onChange={props.changeSelectedTime}
+                                    value={value}
+                                    disabled={busyTime.includes(value)}
+                                />
+                            )
+                        }
+                    })}
+                </div>
+
+
             </div>
             <div id='person'>
                 <div id='form'>
@@ -101,7 +134,9 @@ const SelectTime = props => {
                 </div>
             </div>
 
-            <button onClick={saveTimeRecords}>Записаться</button>
+            <Button  onClick={saveTimeRecords} disabled={!props.isValidate} >Записаться</Button>
+            <Button  onClick={tes} >тест</Button>
+
         </Panel>
     );
 }

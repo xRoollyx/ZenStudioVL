@@ -77,7 +77,7 @@ const SelectDate = props => {
                     </tbody>
                 </table>
             </div>
-            <Button className="Button" onClick={props.go} data-to="selectedTime">
+            <Button id='btn1' onClick={props.go} data-to="selectedTime">
                 {getDateFormat(props.selectedDate)}
             </Button>
         </Panel>

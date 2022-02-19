@@ -1,18 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-
-
 
 import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
 
-
-
-const Home = ({ id, go, fetchedUser, user, isAdmin}) => {
+const Home = ({ id, go, fetchedUser, user, isAdmin, resetData}) => {
 
 	function message(){
 		console.log(fetchedUser.id)
 	}
-
 
 	return (
 	<Panel id={id}>

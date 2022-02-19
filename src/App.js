@@ -15,9 +15,17 @@ const App = () => {
 	const [fetchedUser, setUser] = useState(null);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [selectedDate,setSelectedDate] = useState(new  Date());
+	const [selectedTime,setSelectedTime] = useState([])
 	const [base, setBase] = useState(null)
 	const [isAdmin, setAdmin] = useState(false)
+	const [isValidate, setValidate] = useState(false)
 	const adminVkID = getAdminID()
+
+	function resetData() {
+		setSelectedDate(new Date());
+		setSelectedTime([]);
+		setValidate(false);
+	}
 
 	async function fetchData() {
 		const data = await getBase()
@@ -49,6 +57,7 @@ const App = () => {
 
 
 	const go = e => {
+		if (e.currentTarget.dataset.to === 'home') resetData()
 		setActivePanel(e.currentTarget.dataset.to);
 	};
 
@@ -71,12 +80,19 @@ const App = () => {
 			setActivePanel("adminPanel");
 		}).catch(err => {console.log(err)})
 	}
-
+	function setValidation(validPhone, isSetTime) {
+		if (validPhone && isSetTime) {
+			setValidate(true)
+		}else {
+			setValidate(false)
+		}
+	}
 
 	function updateBase(e) {
 		setActivePanel("home")
 		putBase(e).catch(error => console.log(error.message));
 	}
+
 	
 	function deleteRecordFromBase(recordDate, recordTimeToDelete) {
 		if (confirm("Вы уверенны?")){
@@ -90,6 +106,16 @@ const App = () => {
 		}
 	}
 
+	function changeSelectedTime (e) {
+		const index = selectedTime.indexOf(e.target.value)
+		if (index >= 0){
+			selectedTime.splice(index, 1)
+		}else {
+			selectedTime.push(e.target.value)
+		}
+		console.log(selectedTime)
+	}
+
 	return (
 		<AdaptivityProvider>
 			<AppRoot>
@@ -100,6 +126,7 @@ const App = () => {
 						go={go}
 						user={user}
 						isAdmin={isAdmin}
+						resetData={resetData}
 					/>
 					<SelectDate
 						selectedDate = {selectedDate}
@@ -116,9 +143,13 @@ const App = () => {
 						go={go}
 						base={base}
 						selectedDate={selectedDate}
+						selectedTime={selectedTime}
+						changeSelectedTime={changeSelectedTime}
 						fetchedUser={fetchedUser}
 						updateBase={updateBase}
 						adminVkID={adminVkID}
+						setValidation={setValidation}
+						isValidate={isValidate}
 					/>
 					<AdminPanel
 						id='adminPanel'
