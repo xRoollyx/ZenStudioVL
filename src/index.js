@@ -6,10 +6,17 @@ import App from "./App";
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
 
-ReactDOM.render(<App />, document.getElementById("root"));
-if (process.env.NODE_ENV === "development") {
-  import("./eruda").then(({ default: eruda }) => {}); //runtime download
+const rerenderTree = () =>{
+  ReactDOM.render(<App />, document.getElementById("root"));
+  if (process.env.NODE_ENV === "development") {
+    import("./eruda").then(({ default: eruda }) => {}); //runtime download
+  }
 }
+
+rerenderTree();
+
+
+
 //f61e404a68946ab57c8df8f2c209b0951fdcfa5162878252efdb68483c10d4ae126cbd37c7afeb0d4d15d Токен
 //ba3b76ecba3b76ecba3b76ec36ba4112a0bba3bba3b76ecdb94c5b0481a45b0e6da2805 сервисный ключ
 //90863ba4161c1aba87333ede97616f49c848c9033008eda0abb76d30a3ca89e60c367ddcbdfd8b4eb5c6c ключ сообщества
