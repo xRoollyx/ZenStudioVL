@@ -2,18 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom";
 import bridge from "@vkontakte/vk-bridge";
 import App from "./App";
+import store from "./redux/Store";
 
 // Init VK  Mini App
 bridge.send("VKWebAppInit");
 
-const rerenderTree = () =>{
-  ReactDOM.render(<App />, document.getElementById("root"));
+const rerenderTree = (store) =>{
+  ReactDOM.render(
+      <App
+          store={store}
+      />
+      , document.getElementById("root"));
   if (process.env.NODE_ENV === "development") {
     import("./eruda").then(({ default: eruda }) => {}); //runtime download
   }
 }
 
-rerenderTree();
+rerenderTree(store);
+store.subscriber(rerenderTree);
 
 
 

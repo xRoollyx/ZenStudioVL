@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {Panel, PanelHeader, PanelHeaderBack} from '@vkontakte/vkui';
 import {getTableHeader} from "../function/Function";
 
-import "./AdminPanel.css"
+import "./AdminPanel.module.css"
 
 const AdminPanel = props => {
     const tableHeader = getTableHeader();

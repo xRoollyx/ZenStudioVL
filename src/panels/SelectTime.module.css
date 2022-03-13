@@ -1,0 +1,25 @@
+.layoutGroup {
+    display: flex;
+
+}
+.input {
+    margin-left: auto;
+    margin-right: auto;
+}
+.btn {
+    color: black;
+    background-color: #d5d5d5;
+    width: 200px;
+    margin-right: auto;
+    margin-left: auto;
+    border: 2px solid grey;
+    box-shadow: 6px 6px 6px grey;
+}
+.form{
+    height: 250px;
+    padding: 15px 10px;
+    margin: 30px 15px;
+    border: 2px solid grey;
+    box-shadow: 6px 6px 6px grey;
+    border-radius: 8px;
+}
