@@ -31,12 +31,14 @@
     "eruda": "^2.4.1",
     "eruda-code": "^2.0.0",
     "eruda-dom": "^2.0.0",
-    "firebase": "^9.6.6",
+    "firebase": "^9.6.10",
     "gh-pages": "^3.2.3",
     "jquery": "^3.6.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.8",
+    "redux": "^4.1.2"
   },
   "browserslist": {
     "production": [

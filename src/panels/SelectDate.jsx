@@ -2,39 +2,43 @@ import React from 'react';
 import classes from "./SelectDate.module.css"
 
 import {Button, Div, Panel, PanelHeader, PanelHeaderBack} from '@vkontakte/vkui';
-import {getMonthData, getMonthDay} from "../resurses/CalendarData";
+import {compareEquals, compareLess, getCalendarNames, getMonthData} from "../function/calendar";
+import {nextMonthAC, previousMonthAC, selectDateAC, selectMonthAC, selectYearAC} from "../redux/selectDate-reducer";
+import {setActivePanelAC} from "../redux/homePage-reducer";
+
 
 const SelectDate = props => {
-    const {years, monthNames, weekDayNames} = getMonthDay();
-    const monthData=getMonthData(props.selectedDate.getFullYear(),props.selectedDate.getMonth());
+    const {years, monthNames, weekDayNames} = getCalendarNames();
+    const selectedDate = props.state.selectedDate;
+    const year = selectedDate.getFullYear();
+    const month = selectedDate.getMonth();
+    const monthData = getMonthData(year, month);
 
-    const  classesSelect = (day) => {
-        let cls = props.store.checkWithCurrentDate(day);
-        if (cls === 'today') {
-            return classes.today
-        }else if (cls === 'selected'){
-            return classes.selected
-        }else if (cls === 'previous'){
-            return classes.previous
-        }
-        return classes.next
+    const handleSelectMonth = (event) => props.dispatch(selectMonthAC(event.target.value));
+    const handleSelectYear = (event) => props.dispatch(selectYearAC(event.target.value));
+    const handlePrevMonthButtonClick = () => props.dispatch(previousMonthAC());
+    const handleNextMonthButtonClick = () => props.dispatch(nextMonthAC());
+    const checkedSelectedDate = (day) => props.dispatch(selectDateAC(day));
+    const handleClick = (e) => props.dispatch(setActivePanelAC(e.currentTarget.dataset.to))
+
+    const classNameSelect = (day) => {
+        if (compareEquals(day, selectedDate)) return classes.selected
+        if (compareLess(day, new Date())) return classes.previous
+        if (!compareLess(day, new Date())) return classes.next
     }
 
-    const test = () => {
-        console.log(props.selectedDate)
-    }
     return (
         <Panel id={props.id}>
             <PanelHeader
-                left={<PanelHeaderBack onClick={props.go} data-to="home"/>}
+                left={<PanelHeaderBack onClick={handleClick} data-to="home"/>}
             >
                 Выберите дату
             </PanelHeader>
             <Div className={classes.navigation}>
-                <button onClick={()=>props.store.handlePrevMonthButtonClick()}>{`<`}</button>
+                <button onClick={handlePrevMonthButtonClick}>{`<`}</button>
                 <select
-                    value={props.selectedDate.getMonth()}
-                    onChange={(event)=>props.store.handleSelectMonth(event)}
+                    value={parseInt(month)}
+                    onChange={handleSelectMonth}
                 >
                     {monthNames.map((monthName, index) =>
                     <option key={monthName} value={index}>
@@ -42,15 +46,15 @@ const SelectDate = props => {
                     </option>)}
                 </select>
                 <select
-                    value={props.selectedDate.getFullYear()}
-                    onChange={(event)=>props.store.handleSelectYear(event)}
+                    value={year}
+                    onChange={handleSelectYear}
                 >
                     {years.map((year, index) =>
-                        <option key={index} value={year}>
+                        <option key={index}>
                             {year}
                         </option>)}
                 </select>
-                <button onClick={()=>props.store.handleNextMonthButtonClick()}>{`>`}</button>
+                <button onClick={handleNextMonthButtonClick}>{`>`}</button>
             </Div>
             <Div className={classes.table}>
                 <table>
@@ -66,8 +70,8 @@ const SelectDate = props => {
                     <tbody >{monthData.map((week, index) =>
                         <tr key={index}>{week.map((day, index) => day ?
                             <td key={index}
-                                className={classesSelect(day)}
-                                onClick={()=>props.store.checkedSelectedDate(day)}>{day.getDate()}</td>:
+                                className={classNameSelect(day)}
+                                onClick={()=>checkedSelectedDate(day)}>{day.getDate()}</td>:
                             <td key={index} className={classes.none}>{''}</td>
                         )}
                         </tr>
@@ -75,13 +79,9 @@ const SelectDate = props => {
                     </tbody>
                 </table>
             </Div>
-            <Button className={classes.btn} onClick={props.go} data-to="selectedTime">
-                Выбрать время
+            <Button className={classes.btn} onClick={handleClick} data-to="selectedTime">
+                Выбрать: {selectedDate.toLocaleDateString()}
             </Button>
-            <Button className={classes.btn} onClick={test} >
-                Выбрать время
-            </Button>
-
         </Panel>
     );
 }

@@ -7,12 +7,11 @@ const InputTime = props =>{
         <div className={classes.input}>
             <input
                 type="checkbox"
-                // id={props.id}
-                // onChange={props.onChange}
+                onChange={props.onChange}
                 value={props.value}
-                // disabled={props.disabled}
+                disabled={props.disabled}
             />
-            <label id={props.id}>
+            <label >
                 {props.value}
             </label>
         </div>

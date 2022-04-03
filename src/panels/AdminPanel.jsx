@@ -5,6 +5,7 @@ import {Panel, PanelHeader, PanelHeaderBack} from '@vkontakte/vkui';
 import {getTableHeader} from "../function/Function";
 
 import "./AdminPanel.module.css"
+import {setActivePanelAC} from "../redux/homePage-reducer";
 
 const AdminPanel = props => {
     const tableHeader = getTableHeader();
@@ -14,6 +15,7 @@ const AdminPanel = props => {
         const saveNote = {...props.base[date][time], note: event.target.value}
         props.setNote(date, time , saveNote)
     }
+    const handleClick = (e) => props.dispatch(setActivePanelAC(e.currentTarget.dataset.to))
 
 
 
@@ -21,7 +23,7 @@ const AdminPanel = props => {
     return (
         <Panel id={props.id}>
             <PanelHeader
-                left={<PanelHeaderBack onClick={props.go} data-to="home"/>}
+                left={<PanelHeaderBack onClick={handleClick} data-to="home"/>}
             >
                 Записи
             </PanelHeader>
@@ -71,7 +73,7 @@ const AdminPanel = props => {
 
 AdminPanel.propTypes = {
     id: PropTypes.string.isRequired,
-    go: PropTypes.func.isRequired,
+
 };
 
 export default AdminPanel;
