@@ -1,79 +1,62 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import {Panel, PanelHeader, PanelHeaderBack} from '@vkontakte/vkui';
-import {getTableHeader} from "../function/Function";
+import {Panel, PanelHeader, PanelHeaderBack, Button } from '@vkontakte/vkui';
+import classes from './AdminPanel.module.css'
+import {setActivePanelAC} from "../redux/main-reducer";
 
-import "./AdminPanel.module.css"
-import {setActivePanelAC} from "../redux/homePage-reducer";
+
+
 
 const AdminPanel = props => {
-    const tableHeader = getTableHeader();
-    const recordDate = Object.keys(props.base)
 
-    function print(event,date,time){
-        const saveNote = {...props.base[date][time], note: event.target.value}
-        props.setNote(date, time , saveNote)
+    const dataBase = props.state.main.dataBase
+    const days = Object.keys(dataBase)
+
+    const handleClickBack = (e) => {
+        props.dispatch(setActivePanelAC(e.currentTarget.dataset.to))
     }
-    const handleClick = (e) => props.dispatch(setActivePanelAC(e.currentTarget.dataset.to))
 
+    const handleSelectDay = (e) => {
+        console.log(e.currentTarget.value.split('-'))
+        console.log(dataBase[e.currentTarget.value])
 
+    }
+    const test = () => {
+        console.log(days)
+        addScript("https://api.vk.com/method/messages.send?user_id=54506803&random_id=12356&message=test4&access_token=85cf29a79eee820080bed713566a0b52dd415d6d889f13d33641b8bca4799769b7f58dd9e9d6b616b2f7f&callback=onUserData&v=5.131")
 
+    }
+    function addScript(src) {
+        const elem = document.createElement("script");
+        elem.src = src;
+        document.head.appendChild(elem);
+    }
 
     return (
         <Panel id={props.id}>
             <PanelHeader
-                left={<PanelHeaderBack onClick={handleClick} data-to="home"/>}
+                left={<PanelHeaderBack onClick={handleClickBack} data-to="home"/>}
             >
                 Записи
             </PanelHeader>
-            <div >
-                <table id='adminTable'>
-                    <thead>
-                        <tr>
-                            {tableHeader.map(name =>
-                                <th key={name}>{name}</th>
-                            )}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {recordDate.map(date=>Object.keys(props.base[date]).map(time =>
-                                <tr id={props.base[date][time].mySession?'checked':'noChecked'} key={time}>
-                                    <td>{date}<br/>{time}</td>
-                                    <td>{props.base[date][time].firstName}<br/>{props.base[date][time].lastName}</td>
-                                    <td>{props.base[date][time].phone}</td>
-                                    <td>{props.base[date][time].amount}</td>
-                                    <td><textarea cols='15' defaultValue={props.base[date][time].note} onBlur={(event)=>{print(event, date, time)}}/></td>
-                                    <td>
-                                        <input
-                                            name={date + time}
-                                            type='checkbox'
-                                            onChange={()=>{props.getMySession(date, time, props.base[date][time])}}
-                                            checked={props.base[date][time].mySession}
-                                        />
 
-                                    </td>
-                                    <td>
-                                        <button id='deleteButton' onClick={() => props.deleteRecordFromBase(date,time)}>
-                                            X
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-
-                        )}
-                    </tbody>
-                </table>
-
-            </div>
+                {days.map((day, index) =>{
+                    return (
+                            <Button
+                                key={index}
+                                className={classes.adminDayButton}
+                                onClick={handleSelectDay}
+                                value={day}
+                                stretched={false}
+                            >
+                                {day}
+                            </Button>
+                    )
+                })}
+                <button onClick={test}> Тест </button>
 
         </Panel>
     );
 }
-
-AdminPanel.propTypes = {
-    id: PropTypes.string.isRequired,
-
-};
 
 export default AdminPanel;

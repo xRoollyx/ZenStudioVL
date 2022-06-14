@@ -24,8 +24,8 @@ export function updateServerBase (date, time, record) {
         .then()
 }
 
-export function deleteServerBase () {
-    remove(ref(DB, 'test/112')).then((response)=>{
+export function deleteServerBase (date, time) {
+    remove(ref(DB, `ZEN/${date}/${time}`)).then((response)=>{
         console.log('delete done' + response)}).catch((error) => {
         console.log('delete not done' + error)
     })

@@ -1,34 +1,55 @@
 import React from 'react';
 import classes from './Home.module.css'
-import {Panel, PanelHeader, Button, Group, Div} from '@vkontakte/vkui';
-import {setActivePanelAC} from "../redux/homePage-reducer";
+import {Panel, PanelHeader, Button, ButtonGroup, Div} from '@vkontakte/vkui';
+import {setActivePanelAC} from "../redux/main-reducer";
 
 const Home = props => {
-    const Test = () => {
 
-    }
-    const Test1 = () => {
-
+    const test = () => {
+        console.log(props.state.main.dataBase)
     }
     const handleClick = (e) => props.dispatch(setActivePanelAC(e.currentTarget.dataset.to))
 
     return (
         <Panel id={props.id}>
             <PanelHeader>Фотостудия ZEN</PanelHeader>
-            <Group>
-                <Div> Информация о студии
-
+            <Div className={classes.group}>
+                <Div className={classes.body}>
+                    <Div className={classes.imgSlider} >1</Div>
+                    <Div className={classes.info}>
+                        Слайдеры — аксессуары, устанавливаемые на мотоцикл
+                        для защиты хрупких деталей от разбивания и протирания
+                        при падении машины. Обычно устанавливаются по бокам двигателя.
+                        Также слайдеры устанавливаются на маятник заднего колеса,
+                        на ручки руля и даже на выхлопные трубы. Википедия
+                    </Div>
                 </Div>
-            </Group>
-            <Button className={classes.Btn} onClick={handleClick} data-to="selectDate">
-                Выберите дату записи
-            </Button>
-            <Button className={classes.Btn} onClick={Test} >
-                ТЕСТ
-            </Button>
-            <Button className={classes.Btn} onClick={Test1} >
-                ТЕСТ1
-            </Button>
+            </Div>
+
+            <ButtonGroup
+                className={classes.btnContainer}
+                mode="vertical">
+                <Button
+                    onClick={handleClick}
+                    data-to="selectDate"
+                >
+                    Выберите дату записи
+                </Button>
+                <Button
+                    onClick={handleClick}
+                    data-to="adminPanel"
+                >
+                    Админ
+                </Button>
+                <Button
+                    onClick={test}
+                >
+                    Тест
+                </Button>
+            </ButtonGroup>
+
+
+
         </Panel>
     )
 };

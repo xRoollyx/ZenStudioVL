@@ -1,7 +1,37 @@
-.Btn {
-    background-color: grey;
-    width: 200px;
-    margin-top: 40px;
-    margin-right: auto;
-    margin-left: auto;
+
+body {
+    padding: 0;
+    margin: 0;
 }
+.group {
+    background-color: #c294f1;
+    padding: 0;
+    margin: 0;
+}
+.body{
+    display: flex;
+    width: 100%;
+    height: 65vh;
+    padding: 0;
+    margin: 0;
+}
+.imgSlider{
+    background-color: #f5b7b7;
+   width: 35%;
+}
+.info{
+    background-color: #d5ffd5;
+    width: 65%;
+}
+
+
+.btnContainer {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+Button{
+    min-width: 18em;
+}
+
+
